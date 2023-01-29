@@ -17,6 +17,19 @@ Agenda telefónica de ABC SA
 agenda=[]
 contacto={'id':'1','nombre': 'Juan','apellido':'Perez', 'telefono': '956123456'}
 agenda.append(contacto)
-print(agenda)
 
+from tkinter import *
+from tkinter import ttk
+from vistas import mostrarAgenda
 
+contacto = {'id': '2', 'nombre': 'Pedro', 'apellido': 'Ramirez', 'telefono': '965876541'}
+agenda.append(contacto)
+for x in range(3, 25):
+    contacto = {'id': x, 'nombre': 'Pedro' + str(x), 'apellido': 'Ramirez' + str(x), 'telefono': x}
+    agenda.append(contacto)
+
+# print(agenda)
+ventana = Tk()
+ventana.title("Agenda")
+
+mostrarAgenda(agenda, ventana)
