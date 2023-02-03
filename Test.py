@@ -1,4 +1,10 @@
 # importando metodos
+from tkinter import *
+from tkinter import ttk
+from vistas import mostrarAgenda
+from metodos import agregar
+
+
 
 """
 
@@ -17,6 +23,23 @@ Agenda telefónica de ABC SA
 agenda=[]
 contacto={'id':'0','nombre': 'Juan','apellido':'Perez', 'telefono': '956123456'}
 agenda.append(contacto)
-print(agenda)
 
 
+
+
+"""
+for x in range(3, 25):
+    contacto = {'id': x, 'nombre': 'Pedro' + str(x), 'apellido': 'Ramirez' + str(x), 'telefono': x}
+    #agenda.append(contacto)
+""" 
+
+for x in range(3, 25):
+    agregar(agenda,"mario","ssssssss","555555555")
+
+# print(agenda)
+ventana = Tk()
+ventana.title("Agenda")
+
+#agregar(agenda,"mario","ssssssss","555555555")
+
+mostrarAgenda(agenda, ventana)
