@@ -15,7 +15,7 @@ Agenda telefónica de ABC SA
 """
 # Contacto base
 agenda=[]
-contacto={'id':'1','nombre': 'Juan','apellido':'Perez', 'telefono': '956123456'}
+contacto={'id':'0','nombre': 'Juan','apellido':'Perez', 'telefono': '956123456'}
 agenda.append(contacto)
 print(agenda)
 
