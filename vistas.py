@@ -26,7 +26,7 @@ def mostrarAgenda(agenda, ventana: Tk):
 
     agregarButton = Button(ventana, text="Agregar")
     agregarButton[COMMAND] = lambda: agregarContactoAgenda(
-        nombreEntry.get(), apellidoEntry.get(), telefonoEntry.get(), treeview, agenda)
+        nombreEntry, apellidoEntry, telefonoEntry, treeview, agenda)
     agregarButton.place(x=230, y=65, width=70)
 
     eliminarButton = Button(ventana, text="Eliminar")
@@ -72,6 +72,21 @@ def rellenaTreeview(treeview: ttk.Treeview, agenda):
                                 contacto['telefono']))
 
 
-def agregarContactoAgenda(nombre, apellido, telefono, treeview: ttk.Treeview, agenda):
+def agregarContactoAgenda(nombreEntry: Entry, apellidoEntry, telefonoEntry, treeview: ttk.Treeview, agenda):
+    nombre = nombreEntry.get().strip()
+    if nombre == '':
+        nombreEntry.focus()
+        return
+
+    apellido = apellidoEntry.get().strip()
+    if apellido == '':
+        apellidoEntry.focus()
+        return
+
+    telefono = telefonoEntry.get().strip()
+    if telefono == '':
+        telefonoEntry.focus()
+        return
+
     agregar(agenda, nombre, apellido, telefono)
     rellenaTreeview(treeview, agenda)
