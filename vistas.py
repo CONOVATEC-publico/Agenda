@@ -42,7 +42,11 @@ class App:
         self.eliminarButton[COMMAND] = self.eliminarContactoAgenda
         self.eliminarButton.place(x=20, y=400)
 
-        self.treeview = ttk.Treeview(ventana, columns=("col1", "col2", "col3"))
+        self.modificarButton = Button(ventana, text="Modificar")
+        self.modificarButton[COMMAND] = lambda: self.treeview_doubleclic(None)
+        self.modificarButton.place(x=100, y=400)
+
+        self.treeview = ttk.Treeview(ventana, columns=("col1", "col2", "col3"), selectmode="browse")
         self.treeview.heading("#0", text="Id")
         self.treeview.heading("col1", text="Nombre")
         self.treeview.heading("col2", text="Apellido")
