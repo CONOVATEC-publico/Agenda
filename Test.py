@@ -26,7 +26,7 @@ agenda.append(contacto)
 contacto = {'id': 2,'nombre': 'Pedro','apellido':'Ramirez', 'telefono': '965876541'}
 agenda.append(contacto)
 for x in range(3,20):
-    contacto = {'id': x,'nombre': 'Erick' + str(x),'apellido':'Chumpitaz Terrazas' + str(x), 'telefono': x}
+    contacto = {'id': x,'nombre': 'Miguel' + str(x),'apellido':'Grau' + str(x), 'telefono': x}
     agenda.append(contacto)
 
 # print(agenda)
