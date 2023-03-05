@@ -19,5 +19,8 @@ Este proyecto se basa en la creación de una agenda telefónica mediante el leng
 - [x] Definición de la agenda telefónica
 - [x] Diseño de la agenda telefónica
 
+#### Definición de la agenda
+Se desarrollará un programa en el que se agregará y eliminará datos de contactos, al añadir la información se generará un id a fin de ubicar los datos del contacto en la agenda.
 
-El proyecto agenda empleará la librería tkinter a fin de aportar al proyecto un entorno gráfico.
+#### Diseño de la agenda
+Se empleará como paquete de creación de interfaces gráficas al *tkinter*. Por otro lado, el programa constará de cuatro archivos principales: metodos.py, mostrarAgenda.py, Test.py y vistas.py.

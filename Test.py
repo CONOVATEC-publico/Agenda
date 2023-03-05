@@ -31,7 +31,7 @@ for x in range(3,20):
 
 # print(agenda)
 ventana = Tk()
-ventana.title("Agenda")
+ventana.title("Agenda Telefónica")
 
 agregar(agenda,"Isacc","Newton","988888821")
 
