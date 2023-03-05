@@ -64,9 +64,12 @@ class App:
         ventana.mainloop()
 
     def eliminarContactoAgenda(self):
-        item = self.treeview.item(self.treeview.focus())
-        if item["text"] != '':
-            eliminarContacto(item["text"], self.agenda)
+        selection = self.treeview.selection()
+
+        if len(selection) > 0:
+            id = selection[0]
+            index = self.treeview.item(id, "text")
+            eliminarContacto(index, self.agenda)
             self.rellenaTreeview()
 
     def rellenaTreeview(self):
