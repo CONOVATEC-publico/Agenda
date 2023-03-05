@@ -3,90 +3,88 @@ from tkinter import ttk
 from metodos import *
 
 
-def mostrarAgenda(agenda, ventana: Tk):
-    ventana.geometry("1024x600+50+50")
+class App:
+    def __init__(self, agenda, ventana) -> None:    
+        self.agenda = agenda
+        ventana.geometry("1024x600+50+50")
 
-    nombreLabel = Label(ventana, text='Nombre:')
-    nombreLabel.place(x=20, y=10)
+        self.nombreLabel = Label(ventana, text='Nombre:')
+        self.nombreLabel.place(x=20, y=10)
 
-    nombreEntry = Entry(ventana)
-    nombreEntry.place(x=100, y=10)
+        self.nombreEntry = Entry(ventana)
+        self.nombreEntry.place(x=100, y=10)
 
-    apellidoLabel = Label(ventana, text='Apellido:')
-    apellidoLabel.place(x=20, y=40)
+        self.apellidoLabel = Label(ventana, text='Apellido:')
+        self.apellidoLabel.place(x=20, y=40)
 
-    apellidoEntry = Entry(ventana)
-    apellidoEntry.place(x=100, y=40)
+        self.apellidoEntry = Entry(ventana)
+        self.apellidoEntry.place(x=100, y=40)
 
-    telefonoLabel = Label(ventana, text='Telefono:')
-    telefonoLabel.place(x=20, y=70)
+        self.telefonoLabel = Label(ventana, text='Telefono:')
+        self.telefonoLabel.place(x=20, y=70)
 
-    telefonoEntry = Entry(ventana)
-    telefonoEntry.place(x=100, y=70)
+        self.telefonoEntry = Entry(ventana)
+        self.telefonoEntry.place(x=100, y=70)
 
-    agregarButton = Button(ventana, text="Agregar")
-    agregarButton[COMMAND] = lambda: agregarContactoAgenda(
-        nombreEntry, apellidoEntry, telefonoEntry, treeview, agenda)
-    agregarButton.place(x=230, y=65, width=70)
+        self.agregarButton = Button(ventana, text="Agregar")
+        self.agregarButton[COMMAND] = self.agregarContactoAgenda
+        self.agregarButton.place(x=230, y=65, width=70)
 
-    eliminarButton = Button(ventana, text="Eliminar")
-    eliminarButton[COMMAND] = lambda: eliminarContactoAgenda(treeview, agenda)
-    eliminarButton.place(x=20, y=400)
+        self.eliminarButton = Button(ventana, text="Eliminar")
+        self.eliminarButton[COMMAND] = self.eliminarContactoAgenda
+        self.eliminarButton.place(x=20, y=400)
 
-    treeview = ttk.Treeview(ventana, columns=("col1", "col2", "col3"))
-    treeview.heading("#0", text="Id")
-    treeview.heading("col1", text="Nombre")
-    treeview.heading("col2", text="Apellido")
-    treeview.heading("col3", text="Telefono")
-    treeview.place(x=10, y=100, width=900, height=300)
+        self.treeview = ttk.Treeview(ventana, columns=("col1", "col2", "col3"))
+        self.treeview.heading("#0", text="Id")
+        self.treeview.heading("col1", text="Nombre")
+        self.treeview.heading("col2", text="Apellido")
+        self.treeview.heading("col3", text="Telefono")
+        self.treeview.place(x=10, y=100, width=900, height=300)
 
-    scrollbar = Scrollbar(treeview, orient=VERTICAL)
-    scrollbar.config(command=treeview.yview)
-    scrollbar.pack(side=RIGHT, fill=Y)
-    treeview.config(yscrollcommand=scrollbar.set)
+        self.scrollbar = Scrollbar(self.treeview, orient=VERTICAL)
+        self.scrollbar.config(command=self.treeview.yview)
+        self.scrollbar.pack(side=RIGHT, fill=Y)
+        self.treeview.config(yscrollcommand=self.scrollbar.set)
 
-    rellenaTreeview(treeview, agenda)
+        self.rellenaTreeview()
 
-    style = ttk.Style()
-    style.theme_use("default")
-    style.map("Treeview")
+        style = ttk.Style()
+        style.theme_use("default")
+        style.map("Treeview")
 
-    ventana.mainloop()
+        ventana.mainloop()
 
+    def eliminarContactoAgenda(self):
+        item = self.treeview.item(self.treeview.focus())
+        if item["text"] != '':
+            eliminarContacto(item["text"], self.agenda)
+            self.rellenaTreeview()
 
-def eliminarContactoAgenda(treeview: ttk.Treeview, agenda):
-    item = treeview.item(treeview.focus())
-    if item["text"] != '':
-        eliminarContacto(item["text"], agenda)
-        rellenaTreeview(treeview, agenda)
+    def rellenaTreeview(self):
+        self.treeview.delete(*self.treeview.get_children())
+        for contacto in self.agenda:
+            self.treeview.insert("",
+                                 END,
+                                 text=contacto['id'],
+                                 values=(contacto['nombre'],
+                                         contacto['apellido'],
+                                         contacto['telefono']))
 
+    def agregarContactoAgenda(self):
+        nombre = self.nombreEntry.get().strip()
+        if nombre == '':
+            self.nombreEntry.focus()
+            return
 
-def rellenaTreeview(treeview: ttk.Treeview, agenda):
-    treeview.delete(*treeview.get_children())
-    for contacto in agenda:
-        treeview.insert("",
-                        END,
-                        text=contacto['id'],
-                        values=(contacto['nombre'],
-                                contacto['apellido'],
-                                contacto['telefono']))
+        apellido = self.apellidoEntry.get().strip()
+        if apellido == '':
+            self.apellidoEntry.focus()
+            return
 
+        telefono = self.telefonoEntry.get().strip()
+        if telefono == '':
+            self.telefonoEntry.focus()
+            return
 
-def agregarContactoAgenda(nombreEntry: Entry, apellidoEntry, telefonoEntry, treeview: ttk.Treeview, agenda):
-    nombre = nombreEntry.get().strip()
-    if nombre == '':
-        nombreEntry.focus()
-        return
-
-    apellido = apellidoEntry.get().strip()
-    if apellido == '':
-        apellidoEntry.focus()
-        return
-
-    telefono = telefonoEntry.get().strip()
-    if telefono == '':
-        telefonoEntry.focus()
-        return
-
-    agregar(agenda, nombre, apellido, telefono)
-    rellenaTreeview(treeview, agenda)
+        agregar(self.agenda, nombre, apellido, telefono)
+        self.rellenaTreeview()
