@@ -16,6 +16,8 @@ Este proyecto se basa en la creación de una agenda telefónica mediante el leng
 
 ## Programa del Proyecto
 
+- [x] Definición de la agenda telefónica
+- [x] Diseño de la agenda telefónica
 
 
 El proyecto agenda empleará la librería tkinter a fin de aportar al proyecto un entorno gráfico.
