@@ -8,7 +8,7 @@ Este proyecto se basa en la creación de una agenda telefónica mediante el leng
 
 - [Adrian Capcha](https://github.com/adriancapchaq)
 - [Ever Terrazas](https://github.com/ETERRAZAS21PE)
-- [Mario Calderón](https://github.com/mjcaldhttps://github.com/ETERRAZAS21PE)
+- [Mario Calderón](https://github.com/mjcald)
 
 ## Tecnologías Empleadas
 
