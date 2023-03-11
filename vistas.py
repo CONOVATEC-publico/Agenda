@@ -3,90 +3,163 @@ from tkinter import ttk
 from metodos import *
 
 
-def mostrarAgenda(agenda, ventana: Tk):
-    ventana.geometry("1024x600+50+50")
+class App:
+    def __init__(self, agenda, ventana) -> None:
+        self.editId = ""
 
-    nombreLabel = Label(ventana, text='Nombre:')
-    nombreLabel.place(x=20, y=10)
+        self.agenda = agenda
+        ventana.geometry("1024x600+50+50")
 
-    nombreEntry = Entry(ventana)
-    nombreEntry.place(x=100, y=10)
+        self.nombreLabel = Label(ventana, text='Nombre:')
+        self.nombreLabel.place(x=20, y=10)
 
-    apellidoLabel = Label(ventana, text='Apellido:')
-    apellidoLabel.place(x=20, y=40)
+        self.nombreEntry = Entry(ventana)
+        self.nombreEntry.place(x=100, y=10)
 
-    apellidoEntry = Entry(ventana)
-    apellidoEntry.place(x=100, y=40)
+        self.apellidoLabel = Label(ventana, text='Apellido:')
+        self.apellidoLabel.place(x=20, y=40)
 
-    telefonoLabel = Label(ventana, text='Telefono:')
-    telefonoLabel.place(x=20, y=70)
+        self.apellidoEntry = Entry(ventana)
+        self.apellidoEntry.place(x=100, y=40)
 
-    telefonoEntry = Entry(ventana)
-    telefonoEntry.place(x=100, y=70)
+        self.telefonoLabel = Label(ventana, text='Telefono:')
+        self.telefonoLabel.place(x=20, y=70)
 
-    agregarButton = Button(ventana, text="Agregar")
-    agregarButton[COMMAND] = lambda: agregarContactoAgenda(
-        nombreEntry, apellidoEntry, telefonoEntry, treeview, agenda)
-    agregarButton.place(x=230, y=65, width=70)
+        self.telefonoEntry = Entry(ventana)
+        self.telefonoEntry.place(x=100, y=70)
 
-    eliminarButton = Button(ventana, text="Eliminar")
-    eliminarButton[COMMAND] = lambda: eliminarContactoAgenda(treeview, agenda)
-    eliminarButton.place(x=20, y=400)
+        self.agregarButton = Button(ventana, text="Agregar")
+        self.agregarButton[COMMAND] = self.agregarContactoAgenda
+        self.agregarButton.place(x=230, y=65, width=70)
 
-    treeview = ttk.Treeview(ventana, columns=("col1", "col2", "col3"))
-    treeview.heading("#0", text="Id")
-    treeview.heading("col1", text="Nombre")
-    treeview.heading("col2", text="Apellido")
-    treeview.heading("col3", text="Telefono")
-    treeview.place(x=10, y=100, width=900, height=300)
+        self.guardarButton = Button(ventana, text="Guardar")
+        self.guardarButton[COMMAND] = self.guardarContactoAgenda
 
-    scrollbar = Scrollbar(treeview, orient=VERTICAL)
-    scrollbar.config(command=treeview.yview)
-    scrollbar.pack(side=RIGHT, fill=Y)
-    treeview.config(yscrollcommand=scrollbar.set)
+        self.cancelarButton = Button(ventana, text="Cancelar")
+        self.cancelarButton[COMMAND] = self.cancelarGuardar
 
-    rellenaTreeview(treeview, agenda)
+        self.eliminarButton = Button(ventana, text="Eliminar")
+        self.eliminarButton[COMMAND] = self.eliminarContactoAgenda
+        self.eliminarButton.place(x=20, y=400)
 
-    style = ttk.Style()
-    style.theme_use("default")
-    style.map("Treeview")
+        self.modificarButton = Button(ventana, text="Modificar")
+        self.modificarButton[COMMAND] = lambda: self.treeview_doubleclic(None)
+        self.modificarButton.place(x=100, y=400)
 
-    ventana.mainloop()
+        self.treeview = ttk.Treeview(ventana, columns=("col1", "col2", "col3"), selectmode="browse")
+        self.treeview.heading("#0", text="Id")
+        self.treeview.heading("col1", text="Nombre")
+        self.treeview.heading("col2", text="Apellido")
+        self.treeview.heading("col3", text="Telefono")
+        self.treeview.bind('<Double-1>', self.treeview_doubleclic)
+        self.treeview.place(x=10, y=100, width=900, height=300)
 
+        self.scrollbar = Scrollbar(self.treeview, orient=VERTICAL)
+        self.scrollbar.config(command=self.treeview.yview)
+        self.scrollbar.pack(side=RIGHT, fill=Y)
+        self.treeview.config(yscrollcommand=self.scrollbar.set)
 
-def eliminarContactoAgenda(treeview: ttk.Treeview, agenda):
-    item = treeview.item(treeview.focus())
-    if item["text"] != '':
-        eliminarContacto(item["text"], agenda)
-        rellenaTreeview(treeview, agenda)
+        self.rellenaTreeview()
 
+        style = ttk.Style()
+        style.theme_use("default")
+        style.map("Treeview")
 
-def rellenaTreeview(treeview: ttk.Treeview, agenda):
-    treeview.delete(*treeview.get_children())
-    for contacto in agenda:
-        treeview.insert("",
-                        END,
-                        text=contacto['id'],
-                        values=(contacto['nombre'],
-                                contacto['apellido'],
-                                contacto['telefono']))
+        ventana.mainloop()
 
+    def eliminarContactoAgenda(self):
+        selection = self.treeview.selection()
 
-def agregarContactoAgenda(nombreEntry: Entry, apellidoEntry, telefonoEntry, treeview: ttk.Treeview, agenda):
-    nombre = nombreEntry.get().strip()
-    if nombre == '':
-        nombreEntry.focus()
-        return
+        if len(selection) > 0:
+            id = selection[0]
+            index = self.treeview.item(id, "text")
+            eliminarContacto(index, self.agenda)
+            self.rellenaTreeview()
 
-    apellido = apellidoEntry.get().strip()
-    if apellido == '':
-        apellidoEntry.focus()
-        return
+    def rellenaTreeview(self):
+        self.treeview.delete(*self.treeview.get_children())
+        for contacto in self.agenda:
+            self.treeview.insert("",
+                                 END,
+                                 text=contacto['id'],
+                                 values=(contacto['nombre'],
+                                         contacto['apellido'],
+                                         contacto['telefono']))
 
-    telefono = telefonoEntry.get().strip()
-    if telefono == '':
-        telefonoEntry.focus()
-        return
+    def agregarContactoAgenda(self):
+        nombre = self.nombreEntry.get().strip()
+        if nombre == '':
+            self.nombreEntry.focus()
+            return
 
-    agregar(agenda, nombre, apellido, telefono)
-    rellenaTreeview(treeview, agenda)
+        apellido = self.apellidoEntry.get().strip()
+        if apellido == '':
+            self.apellidoEntry.focus()
+            return
+
+        telefono = self.telefonoEntry.get().strip()
+        if telefono == '':
+            self.telefonoEntry.focus()
+            return
+
+        agregar(self.agenda, nombre, apellido, telefono)
+        self.rellenaTreeview()
+
+        self.limpiarEntrys()
+        self.nombreEntry.focus()
+
+    def treeview_doubleclic(self, event):
+        selection = self.treeview.selection()
+        self.limpiarEntrys()
+
+        if len(selection) > 0:
+            self.editId = selection[0]
+            contacto = self.treeview.item(self.editId, "values")
+
+            self.nombreEntry.insert(0, contacto[0])
+            self.apellidoEntry.insert(0, contacto[1])
+            self.telefonoEntry.insert(0, contacto[2])
+
+            self.nombreEntry.focus()
+
+            self.guardarButton.place(x=230, y=65, width=70)
+            self.cancelarButton.place(x=310, y=65, width=70)
+
+    def cancelarGuardar(self):
+        self.nombreEntry.focus()
+        self.guardarButton.place_forget()
+        self.cancelarButton.place_forget()
+        self.limpiarEntrys()
+        self.editId = ""
+
+    def guardarContactoAgenda(self):
+        if self.editId != "":
+            index = self.treeview.item(self.editId, "text")
+
+            nombre = self.nombreEntry.get().strip()
+            if nombre == '':
+                self.nombreEntry.focus()
+                return
+
+            apellido = self.apellidoEntry.get().strip()
+            if apellido == '':
+                self.apellidoEntry.focus()
+                return
+
+            telefono = self.telefonoEntry.get().strip()
+            if telefono == '':
+                self.telefonoEntry.focus()
+                return
+                
+            modificarContacto(self.agenda, int(index), nombre, apellido, telefono)
+            self.rellenaTreeview()
+
+        self.nombreEntry.focus()
+        self.guardarButton.place_forget()
+        self.cancelarButton.place_forget()
+        self.limpiarEntrys()
+
+    def limpiarEntrys(self):
+        self.nombreEntry.delete(0, END)
+        self.apellidoEntry.delete(0, END)
+        self.telefonoEntry.delete(0, END)

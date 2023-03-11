@@ -26,6 +26,15 @@ def eliminarContacto(id, agenda):
             return
 
 
+# Método para editar/modificar un contacto
+def modificarContacto(agenda, index, nombre, apellido, telefono):
+    contacto = {
+        "id":index,
+        "nombre":nombre,
+        "apellido":apellido,
+        "telefono":telefono
+    }
+    agenda[index] = contacto
 
 
 
