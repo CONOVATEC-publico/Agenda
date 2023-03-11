@@ -1,11 +1,11 @@
 # Método para añadir contacto
 
-indice=1
+indice = 1
 
 def agregar(agenda, nombre, apellido, telefono):
     global indice
-    
-    #global contacto
+
+    # global contacto
     contacto = {
         "id":indice,
         "nombre":nombre,
@@ -15,7 +15,6 @@ def agregar(agenda, nombre, apellido, telefono):
     indice += 1
 
     agenda.append(contacto)
-
 
 
 
