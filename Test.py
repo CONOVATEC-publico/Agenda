@@ -1,7 +1,7 @@
 # importando metodos
 from tkinter import *
 from tkinter import ttk
-from mostrarAgenda import mostrarAgenda
+from vistas import App #mostrarAgenda
 from metodos import agregar
 """
 
@@ -35,4 +35,4 @@ ventana.title("Agenda Telefónica")
 
 agregar(agenda,"Isacc","Newton","988888821")
 
-mostrarAgenda(agenda, ventana)
+App(agenda, ventana) #mostrarAgenda(agenda, ventana)
