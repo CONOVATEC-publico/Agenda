@@ -40,4 +40,18 @@ def modificarContacto(agenda, index, nombre, apellido, telefono):
 
 # Método para buscar contacto
 
+#pip install phonenumbers en caso que no se pueda importar la librería phonenumbers
+import phonenumbers
+from phonenumbers import carrier, geocoder
+
+def ExaminarNumero(movil):
+    data = []
+    numero = phonenumbers.parse(movil)
+    data.append(geocoder.description_for_number(numero,"es"))
+    data.append(carrier.name_for_number(numero,"es"))
+    return data
+
+movil = input("Ingrese un número telefónico: ")
+print(ExaminarNumero(movil))
+
 
