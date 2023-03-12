@@ -1,7 +1,7 @@
 # importando metodos
 from tkinter import *
 from tkinter import ttk
-from vistas import mostrarAgenda
+from mostrarAgenda import mostrarAgenda
 from metodos import agregar
 """
 
