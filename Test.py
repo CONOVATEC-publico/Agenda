@@ -33,6 +33,6 @@ for x in range(3,7):
 ventana = Tk()
 ventana.title("Agenda Telefónica")
 
-agregar(agenda,"Gauss","Jordano","988888821")
+agregar(agenda,"Carl F.","Gauss","988888821")
 
 App(agenda, ventana) #mostrarAgenda(agenda, ventana)

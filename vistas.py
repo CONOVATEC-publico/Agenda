@@ -22,7 +22,7 @@ class App:
         self.apellidoEntry = Entry(ventana)
         self.apellidoEntry.place(x=100, y=40)
 
-        self.telefonoLabel = Label(ventana, text='Telefono:')
+        self.telefonoLabel = Label(ventana, text='Teléfono:')
         self.telefonoLabel.place(x=20, y=70)
 
         self.telefonoEntry = Entry(ventana)
@@ -31,6 +31,10 @@ class App:
         self.agregarButton = Button(ventana, text="Agregar")
         self.agregarButton[COMMAND] = self.agregarContactoAgenda
         self.agregarButton.place(x=230, y=65, width=70)
+
+        self.agregarButton = Button(ventana, text="Consultar contacto")
+        self.agregarButton[COMMAND] = self.agregarContactoAgenda
+        self.agregarButton.place(x=330, y=65, width=120)
 
         self.guardarButton = Button(ventana, text="Guardar")
         self.guardarButton[COMMAND] = self.guardarContactoAgenda
