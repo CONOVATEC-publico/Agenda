@@ -33,8 +33,8 @@ class App:
         self.agregarButton.place(x=230, y=65, width=70)
 
         self.agregarButton = Button(ventana, text="Consultar contacto")
-        self.agregarButton[COMMAND] = self.agregarContactoAgenda
-        self.agregarButton.place(x=330, y=65, width=120)
+        self.agregarButton[COMMAND] = self.consultarContactoAgenda
+        self.agregarButton.place(x=20, y=400, width=120)
 
         self.guardarButton = Button(ventana, text="Guardar")
         self.guardarButton[COMMAND] = self.guardarContactoAgenda
@@ -44,11 +44,11 @@ class App:
 
         self.eliminarButton = Button(ventana, text="Eliminar")
         self.eliminarButton[COMMAND] = self.eliminarContactoAgenda
-        self.eliminarButton.place(x=20, y=400)
+        self.eliminarButton.place(x=330, y=65)
 
         self.modificarButton = Button(ventana, text="Modificar")
         self.modificarButton[COMMAND] = lambda: self.treeview_doubleclic(None)
-        self.modificarButton.place(x=100, y=400)
+        self.modificarButton.place(x=410, y=65)
 
         self.treeview = ttk.Treeview(ventana, columns=("col1", "col2", "col3"), selectmode="browse")
         self.treeview.heading("#0", text="Id")
@@ -167,3 +167,14 @@ class App:
         self.nombreEntry.delete(0, END)
         self.apellidoEntry.delete(0, END)
         self.telefonoEntry.delete(0, END)
+    
+    def consultarContactoAgenda(self):
+        print("Entrando al método consultar contacto")
+        telefono = self.telefonoEntry.get().strip()
+        if telefono == '':
+            self.telefonoEntry.focus()
+            return
+        
+        buscarContacto(telefono, self.agenda)
+        self.rellenaTreeview()
+        self.limpiarEntrys()

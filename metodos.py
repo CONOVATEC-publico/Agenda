@@ -43,7 +43,8 @@ def buscarContacto(telefono, agenda):
     for contacto in agenda:
         if contacto['telefono'] == telefono:
             agenda.index(contacto)
-            return
+            print(contacto)
+            return contacto
 
 
 #pip install phonenumbers en caso que no se pueda importar la librería phonenumbers
