@@ -28,13 +28,16 @@ class App:
         self.telefonoEntry = Entry(ventana)
         self.telefonoEntry.place(x=100, y=70)
 
+        self.consultarEntry = Entry(ventana)
+        self.consultarEntry.place(x=20, y=400)
+
         self.agregarButton = Button(ventana, text="Agregar")
         self.agregarButton[COMMAND] = self.agregarContactoAgenda
         self.agregarButton.place(x=230, y=65, width=70)
 
         self.agregarButton = Button(ventana, text="Consultar contacto")
         self.agregarButton[COMMAND] = self.consultarContactoAgenda
-        self.agregarButton.place(x=20, y=400, width=120)
+        self.agregarButton.place(x=170, y=400, width=120)
 
         self.guardarButton = Button(ventana, text="Guardar")
         self.guardarButton[COMMAND] = self.guardarContactoAgenda
@@ -170,11 +173,11 @@ class App:
     
     def consultarContactoAgenda(self):
         print("Entrando al método consultar contacto")
-        telefono = self.telefonoEntry.get().strip()
-        if telefono == '':
-            self.telefonoEntry.focus()
+        consulta = self.consultarEntry.get().strip()
+        if consulta == '':
+            self.consultarEntry.focus()
             return
         
-        buscarContacto(telefono, self.agenda)
+        buscarContacto(consulta, self.agenda)
         self.rellenaTreeview()
         self.limpiarEntrys()
