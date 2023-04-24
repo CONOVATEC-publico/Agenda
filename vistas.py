@@ -170,14 +170,15 @@ class App:
         self.nombreEntry.delete(0, END)
         self.apellidoEntry.delete(0, END)
         self.telefonoEntry.delete(0, END)
+        self.consultarEntry.delete(0, END)
     
     def consultarContactoAgenda(self):
         print("Entrando al método consultar contacto")
-        consulta = self.consultarEntry.get().strip()
-        if consulta == '':
+        consultar = self.consultarEntry.get().strip()
+        if consultar == '':
             self.consultarEntry.focus()
             return
         
-        buscarContacto(consulta, self.agenda)
+        buscarContacto(consultar, self.agenda)
         self.rellenaTreeview()
         self.limpiarEntrys()
