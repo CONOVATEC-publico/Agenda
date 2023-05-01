@@ -1,13 +1,15 @@
 from tkinter import *
 from tkinter import ttk
 from metodos import *
+from detalle import *
 
 
 class App:
     def __init__(self, agenda, ventana) -> None:
         self.editId = ""
-
+        self.ventana = ventana
         self.agenda = agenda
+
         ventana.geometry("1024x600+50+50")
 
         self.nombreLabel = Label(ventana, text='Nombre:')
@@ -45,6 +47,10 @@ class App:
         self.modificarButton = Button(ventana, text="Modificar")
         self.modificarButton[COMMAND] = lambda: self.treeview_doubleclic(None)
         self.modificarButton.place(x=100, y=400)
+
+        self.detalleButton = Button(ventana, text="Ver detalle")
+        self.detalleButton[COMMAND] = self.verDetalleContacto
+        self.detalleButton.place(x=825, y=65, width=70)
 
         self.treeview = ttk.Treeview(ventana, columns=("col1", "col2", "col3"), selectmode="browse")
         self.treeview.heading("#0", text="Id")
@@ -150,7 +156,7 @@ class App:
             if telefono == '':
                 self.telefonoEntry.focus()
                 return
-                
+
             modificarContacto(self.agenda, int(index), nombre, apellido, telefono)
             self.rellenaTreeview()
 
@@ -163,3 +169,25 @@ class App:
         self.nombreEntry.delete(0, END)
         self.apellidoEntry.delete(0, END)
         self.telefonoEntry.delete(0, END)
+
+    def verDetalleContacto(self):
+        selection = self.treeview.selection()
+
+        if len(selection) > 0:
+            id = selection[0]
+            contacto = self.treeview.item(id, "values")
+
+            detalleVista = DetalleVista(self.ventana, contacto)
+            self.ventana.wait_window(detalleVista.root)   # <<< NOTE
+
+            contactoEditado = detalleVista.contacto
+
+            if (contacto[0] != contactoEditado[0]
+                    or contacto[1] != contactoEditado[1]
+                    or contacto[2] != contactoEditado[2]):
+
+                index = self.treeview.item(id, "text")
+
+                modificarContacto(self.agenda, int(index),
+                                  contactoEditado[0], contactoEditado[1], contactoEditado[2])
+                self.rellenaTreeview()
