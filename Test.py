@@ -1,7 +1,7 @@
 # importando metodos
 from tkinter import *
 from tkinter import ttk
-from vistas import App
+from vistas import App #mostrarAgenda
 from metodos import agregar
 
 """
@@ -23,11 +23,17 @@ contacto = {'id': '0', 'nombre': 'Juan',
             'apellido': 'Perez', 'telefono': '956123456'}
 agenda.append(contacto)
 
-for x in range(1, 5+1):
-    agregar(agenda, 'nombre' + str(x), 'apellido' +
-            str(x), 'telefono' + str(x))
+
+contacto = {'id': 2,'nombre': 'Pedro','apellido':'Ramirez', 'telefono': '965876541'}
+agenda.append(contacto)
+for x in range(3,20):
+    contacto = {'id': x,'nombre': 'Miguel' + str(x),'apellido':'Grau' + str(x), 'telefono': x}
+    agenda.append(contacto)
 
 # print(agenda)
 ventana = Tk()
-ventana.title("Agenda")
-detalleVista = App(agenda, ventana)
+ventana.title("Agenda Telefónica")
+
+agregar(agenda,"Isacc","Newton","988888821")
+
+#mostrarAgenda(agenda, ventana)
