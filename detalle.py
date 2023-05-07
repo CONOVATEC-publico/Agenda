@@ -11,14 +11,14 @@ class DetalleVista:
         self.root.grab_set()
         self.root.transient(parent)
 
-        self.root.title("Detalle")
+        self.root.title("Ver detalle button")
         self.root.geometry("335x200+350+250")
         self.root.resizable(width=False, height=False)
 
         self.contacto = contacto
 
         self.detalleLabel = tk.Label(self.root)
-        self.detalleLabel["text"] = "Detalle"
+        self.detalleLabel["text"] = " "
         self.detalleLabel.place(x=100, y=10, width=50, height=25)
 
         self.nombreLabel = tk.Label(self.root)
