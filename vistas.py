@@ -32,7 +32,7 @@ class App:
 
         self.agregarButton = Button(ventana, text="Agregar")
         self.agregarButton[COMMAND] = self.agregarContactoAgenda
-        self.agregarButton.place(x=230, y=65, width=70)
+        self.agregarButton.place(x=825, y=400, width=70)
 
         self.guardarButton = Button(ventana, text="Guardar")
         self.guardarButton[COMMAND] = self.guardarContactoAgenda
