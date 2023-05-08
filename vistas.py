@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from metodos import *
 from detalle import *
-
+from agregar import AgregarVista
 
 class App:
     def __init__(self, agenda, ventana) -> None:
@@ -12,30 +12,30 @@ class App:
 
         ventana.geometry("1024x600+50+50")
 
-        self.nombreLabel = Label(ventana, text='Nombre:')
-        self.nombreLabel.place(x=20, y=10)
+        #self.nombreLabel = Label(ventana, text='Nombre:')
+        #self.nombreLabel.place(x=20, y=10)
 
-        self.nombreEntry = Entry(ventana)
-        self.nombreEntry.place(x=100, y=10)
+        #self.nombreEntry = Entry(ventana)
+        #self.nombreEntry.place(x=100, y=10)
 
-        self.apellidoLabel = Label(ventana, text='Apellido:')
-        self.apellidoLabel.place(x=20, y=40)
+        #self.apellidoLabel = Label(ventana, text='Apellido:')
+        #self.apellidoLabel.place(x=20, y=40)
 
-        self.apellidoEntry = Entry(ventana)
-        self.apellidoEntry.place(x=100, y=40)
+        #self.apellidoEntry = Entry(ventana)
+        #self.apellidoEntry.place(x=100, y=40)
 
-        self.telefonoLabel = Label(ventana, text='Telefono:')
-        self.telefonoLabel.place(x=20, y=70)
+        #self.telefonoLabel = Label(ventana, text='Teléfono:')
+        #self.telefonoLabel.place(x=20, y=70)
 
-        self.telefonoEntry = Entry(ventana)
-        self.telefonoEntry.place(x=100, y=70)
+        #self.telefonoEntry = Entry(ventana)
+        #self.telefonoEntry.place(x=100, y=70)
 
         self.agregarButton = Button(ventana, text="Agregar")
-        self.agregarButton[COMMAND] = self.agregarContactoAgenda
+        self.agregarButton[COMMAND] = self.AgregarContacto
         self.agregarButton.place(x=825, y=400, width=70)
 
-        self.guardarButton = Button(ventana, text="Guardar")
-        self.guardarButton[COMMAND] = self.guardarContactoAgenda
+        #self.guardarButton = Button(ventana, text="Guardar")
+        #self.guardarButton[COMMAND] = self.guardarContactoAgenda
 
         self.cancelarButton = Button(ventana, text="Cancelar")
         self.cancelarButton[COMMAND] = self.cancelarGuardar
@@ -56,7 +56,7 @@ class App:
         self.treeview.heading("#0", text="Id")
         self.treeview.heading("col1", text="Nombre")
         self.treeview.heading("col2", text="Apellido")
-        self.treeview.heading("col3", text="Telefono")
+        self.treeview.heading("col3", text="Teléfono")
         self.treeview.bind('<Double-1>', self.treeview_doubleclic)
         self.treeview.place(x=10, y=100, width=900, height=300)
 
@@ -93,9 +93,9 @@ class App:
                                          contacto['telefono']))
 
     def agregarContactoAgenda(self):
-        nombre = self.nombreEntry.get().strip()
+        nombre = self.nombreEntry_AV.get().strip()
         if nombre == '':
-            self.nombreEntry.focus()
+            self.nombreEntry_AV.focus()
             return
 
         apellido = self.apellidoEntry.get().strip()
@@ -190,4 +190,26 @@ class App:
 
                 modificarContacto(self.agenda, int(index),
                                   contactoEditado[0], contactoEditado[1], contactoEditado[2])
+                self.rellenaTreeview()
+    
+    def AgregarContacto(self):
+        selection = self.treeview.selection()
+
+        if len(selection) > 0:
+            id = selection[0]
+            enlace = self.treeview.item(id, "values")
+
+            agregarVista = AgregarVista(self.ventana, enlace)
+            self.ventana.wait_window(agregarVista.root)   # <<< NOTE
+
+            contactoAgregado = agregarVista.enlace
+
+            if (enlace[0] != contactoAgregado[0]
+                    or enlace[1] != contactoAgregado[1]
+                    or enlace[2] != contactoAgregado[2]):
+
+                index = self.treeview.item(id, "text")
+
+                agregarContactoAgenda(self.agenda, int(index),
+                                  contactoAgregado[0], contactoAgregado[1], contactoAgregado[2])
                 self.rellenaTreeview()
