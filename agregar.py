@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
 from metodos import *
-#from Test import *
 
 class AgregarVista:
     def __init__(self, parent, enlace):
