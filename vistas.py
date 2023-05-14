@@ -65,6 +65,36 @@ class App:
         self.scrollbar.pack(side=RIGHT, fill=Y)
         self.treeview.config(yscrollcommand=self.scrollbar.set)
 
+        # FILTROS
+        self.filtrarLabel = Label(ventana, text='Filtrar por:')
+        self.filtrarLabel.place(x=135, y=435)
+
+        self.idFiltrarLabel = Label(ventana, text='ID:')
+        self.idFiltrarLabel.place(x=170, y=460)
+
+        self.idFiltrarEntry = Entry(ventana)
+        self.idFiltrarEntry.place(x=193, y=460)
+
+        self.nombreFiltrarLabel = Label(ventana, text='Nombre:')
+        self.nombreFiltrarLabel.place(x=325, y=460)
+
+        self.nombreFiltrarEntry = Entry(ventana)
+        self.nombreFiltrarEntry.place(x=378, y=430+30)
+
+        self.telefonoFiltrarLabel = Label(ventana, text='Telefono:')
+        self.telefonoFiltrarLabel.place(x=510, y=460)
+
+        self.telefonoFiltrarEntry = Entry(ventana)
+        self.telefonoFiltrarEntry.place(x=565, y=460)
+
+        self.agregarFiltrarButton = Button(ventana, text="Aplicar filtros")
+        self.agregarFiltrarButton[COMMAND] = self.filtrarContactos
+        self.agregarFiltrarButton.place(x=695, y=455, width=90)
+
+        self.agregarFiltrarButton = Button(ventana, text="Limpiar filtros")
+        self.agregarFiltrarButton[COMMAND] = self.limpiarFiltros
+        self.agregarFiltrarButton.place(x=695, y=485, width=90)
+
         self.rellenaTreeview()
 
         style = ttk.Style()
@@ -82,20 +112,35 @@ class App:
             eliminarContacto(index, self.agenda)
             self.rellenaTreeview()
 
-    def rellenaTreeview(self):
+    def rellenaTreeview(self, idFiltro='', nombreFiltro='', telefonoFiltro=''):
         self.treeview.delete(*self.treeview.get_children())
         for contacto in self.agenda:
-            self.treeview.insert("",
-                                 END,
-                                 text=contacto['id'],
-                                 values=(contacto['nombre'],
-                                         contacto['apellido'],
-                                         contacto['telefono']))
+            agrega = True
+
+            if idFiltro != '':
+                if not idFiltro in str(contacto['id']):
+                    agrega = False
+
+            if nombreFiltro != '':
+                if not nombreFiltro.lower() in contacto['nombre'].lower():
+                    agrega = False
+
+            if telefonoFiltro != '':
+                if not telefonoFiltro.lower() in contacto['telefono'].lower():
+                    agrega = False
+
+            if agrega:
+                self.treeview.insert("",
+                                     END,
+                                     text=contacto['id'],
+                                     values=(contacto['nombre'],
+                                             contacto['apellido'],
+                                             contacto['telefono']))
 
     def agregarContactoAgenda(self):
-        nombre = self.nombreEntry_AV.get().strip()
+        nombre = self.nombreEntry.get().strip()
         if nombre == '':
-            self.nombreEntry_AV.focus()
+            self.nombreEntry.focus()
             return
 
         apellido = self.apellidoEntry.get().strip()
@@ -166,9 +211,10 @@ class App:
         self.limpiarEntrys()
 
     def limpiarEntrys(self):
-        self.nombreEntry.delete(0, END)
-        self.apellidoEntry.delete(0, END)
-        self.telefonoEntry.delete(0, END)
+        contacto = self.treeview.item(id, "values")
+        self.contacto.delete(0, END)
+        
+        #self.telefonoEntry.delete(0, END)
 
     def verDetalleContacto(self):
         selection = self.treeview.selection()
@@ -191,6 +237,21 @@ class App:
                 modificarContacto(self.agenda, int(index),
                                   contactoEditado[0], contactoEditado[1], contactoEditado[2])
                 self.rellenaTreeview()
+
+    def filtrarContactos(self):
+        id = self.idFiltrarEntry.get().strip()
+        nombre = self.nombreFiltrarEntry.get().strip()
+        telefono = self.telefonoFiltrarEntry.get().strip()
+
+        self.rellenaTreeview(id, nombre, telefono)
+
+    def limpiarFiltros(self):
+        self.idFiltrarEntry.delete(0, END)
+        self.nombreFiltrarEntry.delete(0, END)
+        self.telefonoFiltrarEntry.delete(0, END)
+
+        self.rellenaTreeview()
+
     
     def AgregarContacto(self):
         selection = self.treeview.selection()
@@ -198,8 +259,9 @@ class App:
         if len(selection) > 0:
             id = selection[0]
             enlace = self.treeview.item(id, "values")
-
+            #self.limpiarEntrys()
             agregarVista = AgregarVista(self.ventana, enlace)
+            
             self.ventana.wait_window(agregarVista.root)   # <<< NOTE
 
             contactoAgregado = agregarVista.enlace
@@ -210,6 +272,9 @@ class App:
 
                 index = self.treeview.item(id, "text")
 
-                agregarContactoAgenda(self.agenda, int(index),
-                                  contactoAgregado[0], contactoAgregado[1], contactoAgregado[2])
+                agregar(self.agenda, contactoAgregado[0],
+                         contactoAgregado[1], contactoAgregado[2])
                 self.rellenaTreeview()
+        
+
+                

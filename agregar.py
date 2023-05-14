@@ -8,6 +8,7 @@ class AgregarVista:
         self.root.wait_visibility()
         self.root.grab_set()
         self.root.transient(parent)
+        self.root.configure(background='mint cream')
 
         self.root.title("Agregar button")
         self.root.geometry("335x200+350+250")
@@ -95,8 +96,8 @@ class AgregarVista:
             self.telefonoEntry_AV.focus()
             return
         
-        agregar(self.agenda, nombre_AV, apellido_AV, telefono_AV)
-        self.rellenaTreeview()
+        #agregar(self.agenda, nombre_AV, apellido_AV, telefono_AV)
+        #self.rellenaTreeview()
 
     def _salir(self):
         self.root.grab_release()
