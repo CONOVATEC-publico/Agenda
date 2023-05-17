@@ -4,7 +4,7 @@ from tkinter import ttk
 
 def mostrarAgenda(agenda):
     ventana = Tk()
-    ventana.title("Agenda")
+    ventana.title("Agenda Telefónica")
 
     # ventana.geometry("420x260")
     # ventana.minsize(width=275, height=200)

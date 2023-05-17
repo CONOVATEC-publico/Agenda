@@ -1,7 +1,7 @@
 # importando metodos
 from tkinter import *
 from tkinter import ttk
-from vistas import App
+from vistas import App # mostrarAgenda
 from metodos import agregar
 
 """
@@ -29,5 +29,5 @@ for x in range(1, 5+1):
 
 # print(agenda)
 ventana = Tk()
-ventana.title("Agenda")
+ventana.title("Agenda Telefónica")
 detalleVista = App(agenda, ventana)
