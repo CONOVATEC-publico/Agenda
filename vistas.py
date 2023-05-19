@@ -44,9 +44,9 @@ class App:
         self.eliminarButton[COMMAND] = self.eliminarContactoAgenda
         self.eliminarButton.place(x=20, y=400)
 
-        self.modificarButton = Button(ventana, text="Modificar")
-        self.modificarButton[COMMAND] = lambda: self.treeview_doubleclic(None)
-        self.modificarButton.place(x=100, y=400)
+        #self.modificarButton = Button(ventana, text="Modificar")
+        #self.modificarButton[COMMAND] = lambda: self.treeview_doubleclic(None)
+        #self.modificarButton.place(x=100, y=400)
 
         self.detalleButton = Button(ventana, text="Ver detalle")
         self.detalleButton[COMMAND] = self.verDetalleContacto
@@ -137,7 +137,7 @@ class App:
                                              contacto['apellido'],
                                              contacto['telefono']))
 
-    def agregarContactoAgenda(self):
+    def agregarContactoAgenda(self): # A este método se le ha dado de baja.
         nombre = self.nombreEntry.get().strip()
         if nombre == '':
             self.nombreEntry.focus()
