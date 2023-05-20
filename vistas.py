@@ -116,6 +116,11 @@ class App:
         Etiqueta_VE2 = tkinter.Label(ventana_eliminar, text="¿Está seguro que quiere eliminar este contacto").pack()
         Etiqueta_VE3 = tkinter.Label(ventana_eliminar, text="¿de su agenda telefónica?").pack()
 
+        # --------------------Botones--------------------
+        Button_SI = Button(ventana_eliminar, text="Si")
+        #Button_SI[COMMAND] = eliminarContacto(index, self.agenda)
+        Button_SI.place(x=60, y=80, width=30)
+
         ventana_eliminar.mainloop()
         # -----------------------------------------------
         selection = self.treeview.selection()
@@ -123,6 +128,7 @@ class App:
         if len(selection) > 0:
             id = selection[0]
             index = self.treeview.item(id, "text")
+            Button_SI[COMMAND] = eliminarContacto(index, self.agenda)
             eliminarContacto(index, self.agenda)
             self.rellenaTreeview()
 
