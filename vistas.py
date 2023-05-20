@@ -3,6 +3,7 @@ from tkinter import ttk
 from metodos import *
 from detalle import *
 from agregar import AgregarVista
+import tkinter # Invocamos esta librería en esta línea para la ventana eliminar
 
 class App:
     def __init__(self, agenda, ventana) -> None:
@@ -104,6 +105,14 @@ class App:
         ventana.mainloop()
 
     def eliminarContactoAgenda(self):
+        # --------------Ventana Eliminar----------------
+        ventana_eliminar = tkinter.Tk()
+        ventana_eliminar.title("Eliminar")
+        ventana_eliminar.geometry("335x120+350+90")
+        ventana_eliminar.resizable(0,0)
+
+        ventana_eliminar.mainloop()
+        # ----------------------------------------------
         selection = self.treeview.selection()
 
         if len(selection) > 0:
