@@ -105,14 +105,19 @@ class App:
         ventana.mainloop()
 
     def eliminarContactoAgenda(self):
-        # --------------Ventana Eliminar----------------
+        # --------------Ventana Eliminar-----------------
         ventana_eliminar = tkinter.Tk()
-        ventana_eliminar.title("Eliminar")
+        ventana_eliminar.title("               Eliminar               ")
         ventana_eliminar.geometry("335x120+350+90")
         ventana_eliminar.resizable(0,0)
 
+        # --------Etiqueta de la ventana eliminar--------
+        Etiqueta_VE1 = tkinter.Label(ventana_eliminar, text=" ").pack()
+        Etiqueta_VE2 = tkinter.Label(ventana_eliminar, text="¿Está seguro que quiere eliminar este contacto").pack()
+        Etiqueta_VE3 = tkinter.Label(ventana_eliminar, text="¿de su agenda telefónica?").pack()
+
         ventana_eliminar.mainloop()
-        # ----------------------------------------------
+        # -----------------------------------------------
         selection = self.treeview.selection()
 
         if len(selection) > 0:
