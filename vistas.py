@@ -50,7 +50,7 @@ class App:
 
         self.detalleButton = Button(ventana, text="Ver detalle")
         self.detalleButton[COMMAND] = self.verDetalleContacto
-        self.detalleButton.place(x=825, y=65, width=70)
+        self.detalleButton.place(x=825, y=35, width=70)
 
         self.treeview = ttk.Treeview(ventana, columns=("col1", "col2", "col3"), selectmode="browse")
         self.treeview.heading("#0", text="Id")
@@ -58,7 +58,7 @@ class App:
         self.treeview.heading("col2", text="Apellido")
         self.treeview.heading("col3", text="Teléfono")
         self.treeview.bind('<Double-1>', self.treeview_doubleclic)
-        self.treeview.place(x=10, y=100, width=900, height=300)
+        self.treeview.place(x=10, y=70, width=900, height=320)
 
         self.scrollbar = Scrollbar(self.treeview, orient=VERTICAL)
         self.scrollbar.config(command=self.treeview.yview)
