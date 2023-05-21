@@ -1,10 +1,11 @@
+import tkinter as tk
 from tkinter import *
 from tkinter import ttk
 from metodos import *
 from detalle import *
 from agregar import AgregarVista
 from eliminar import EliminarVista
-#import tkinter # Invocamos esta librería en esta línea para la ventana eliminar
+import tkinter # Invocamos esta librería en esta línea para la ventana agregar
 
 class App:
     def __init__(self, agenda, ventana) -> None:
@@ -44,7 +45,7 @@ class App:
 
         self.eliminarButton = Button(ventana, text="Eliminar")
         self.eliminarButton[COMMAND] = self.eliminarContactoAgenda
-        self.eliminarButton.place(x=20, y=400)
+        self.eliminarButton.place(x=10, y=400)
 
         #self.modificarButton = Button(ventana, text="Modificar")
         #self.modificarButton[COMMAND] = lambda: self.treeview_doubleclic(None)
@@ -266,7 +267,6 @@ class App:
         self.telefonoFiltrarEntry.delete(0, END)
 
         self.rellenaTreeview()
-
     
     def AgregarContacto(self):
         selection = self.treeview.selection()
@@ -274,9 +274,8 @@ class App:
         if len(selection) > 0:
             id = selection[0]
             enlace = self.treeview.item(id, "values")
-            #self.limpiarEntrys()
-            agregarVista = AgregarVista(self.ventana, enlace)
             
+            agregarVista = AgregarVista(self.ventana, enlace)
             self.ventana.wait_window(agregarVista.root)   # <<< NOTE
 
             contactoAgregado = agregarVista.enlace
@@ -290,6 +289,21 @@ class App:
                 agregar(self.agenda, contactoAgregado[0],
                          contactoAgregado[1], contactoAgregado[2])
                 self.rellenaTreeview()
-        
+            
+        else:
+            # --------------Ventana Agregar-----------------
+            ventana_agregar = tkinter.Tk()
+            ventana_agregar.title("Agregar button")
+            ventana_agregar.geometry("335x200+350+250")
+            ventana_agregar.resizable(width=False, height=False)
 
-                
+            # -------Etiquetas de la ventana agregar--------
+            nombre_Label = tkinter.Label(ventana_agregar, text="Nombre:").pack()
+            nombre_Label.place(x=30, y=10, width=70, height=25)
+
+            ventana_agregar.mainloop()
+
+            # -------Etiquetas de la ventana agregar--------
+                #self.nombreLabel_VA = tk.Label(self)
+                #self.nombreLabel_VA["text"] = "Nombre"
+                #self.nombreLabel_VA.place(x=30, y=10, width=70, height=25)

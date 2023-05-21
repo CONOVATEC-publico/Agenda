@@ -12,7 +12,7 @@ class EliminarVista:
         #self.root.configure(background='mint cream')
 
         self.root.title("                                      Eliminar                         ")
-        self.root.geometry("335x120+350+90")
+        self.root.geometry("335x120+350+250")
         self.root.resizable(width=False, height=False)
         # -----------------------------------------------
         self.contacto = contacto
@@ -60,7 +60,7 @@ class EliminarVista:
         self._salirVentana()
     
     def Button_SI_command(self):
-        print("¡La clase EliminarVista ha funcionado satisfactoriamente!")
+        print("¡La clase EliminarVista cumple con su función de manera satisfactoria!")
         self.contacto = [self.nombreEntry_EV.get().strip(),
                          self.apellidoEntry_EV.get().strip(),
                          self.telefonoEntry_EV.get().strip()]
