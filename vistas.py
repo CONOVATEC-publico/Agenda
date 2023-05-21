@@ -3,6 +3,7 @@ from tkinter import ttk
 from metodos import *
 from detalle import *
 from agregar import AgregarVista
+from eliminar import EliminarVista
 import tkinter # Invocamos esta librería en esta línea para la ventana eliminar
 
 class App:
@@ -104,43 +105,27 @@ class App:
 
         ventana.mainloop()
 
-    def VentanaEliminar(self, Button_SI, Button_NO):
-        # --------------Ventana Eliminar-----------------
-        ventana_eliminar = tkinter.Tk()
-        ventana_eliminar.title("               Eliminar               ")
-        ventana_eliminar.geometry("335x120+350+90")
-        ventana_eliminar.resizable(0,0)
-
-        # --------Etiqueta de la ventana eliminar--------
-        Etiqueta_VE1 = tkinter.Label(ventana_eliminar, text=" ").pack()
-        Etiqueta_VE2 = tkinter.Label(ventana_eliminar, text="¿Está seguro que quiere eliminar este contacto").pack()
-        Etiqueta_VE3 = tkinter.Label(ventana_eliminar, text="de su agenda telefónica?").pack()
-
-        # --------------------Botones--------------------
-        Button_SI = Button(ventana_eliminar, text="Si")
-        Button_SI[COMMAND] = self.eliminarContactoAgenda
-        Button_SI.place(x=60, y=80, width=30)
-
-        Button_NO = Button(ventana_eliminar, text="No")
-        Button_NO[COMMAND] = self.agenda
-        Button_NO.place(x=245, y=80, width=30)
-
-        ventana_eliminar.mainloop()
-        # -----------------------------------------------
-    
     def eliminarContactoAgenda(self):
 
         selection = self.treeview.selection()
-    
+
         if len(selection) > 0:
-            #self.VentanaEliminar(Button_SI=TRUE, Button_NO=FALSE)
-            if self.VentanaEliminar(Button_SI=TRUE, Button_NO=FALSE) == True:
-                id = selection[0]
+            id = selection[0]
+            contacto = self.treeview.item(id, "values")
+
+            eliminarVista = EliminarVista(self.ventana, contacto)
+            self.ventana.wait_window(eliminarVista.root)   # <<< NOTE
+
+            contactoEditado = eliminarVista.contacto
+
+            if (contacto[0] != contactoEditado[0]
+                    or contacto[1] != contactoEditado[1]
+                    or contacto[2] != contactoEditado[2]):
+
                 index = self.treeview.item(id, "text")
+
                 eliminarContacto(index, self.agenda)
                 self.rellenaTreeview()
-            else:
-                self.VentanaEliminar(Button_SI=FALSE, Button_NO=TRUE)
 
     def rellenaTreeview(self, idFiltro='', nombreFiltro='', telefonoFiltro=''):
         self.treeview.delete(*self.treeview.get_children())
