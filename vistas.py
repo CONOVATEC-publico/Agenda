@@ -4,7 +4,7 @@ from metodos import *
 from detalle import *
 from agregar import AgregarVista
 from eliminar import EliminarVista
-import tkinter # Invocamos esta librería en esta línea para la ventana eliminar
+#import tkinter # Invocamos esta librería en esta línea para la ventana eliminar
 
 class App:
     def __init__(self, agenda, ventana) -> None:
@@ -12,7 +12,7 @@ class App:
         self.ventana = ventana
         self.agenda = agenda
 
-        ventana.geometry("1024x600+50+50")
+        ventana.geometry("925x538+50+50") #ventana.geometry("1024x600+50+50")
 
         #self.nombreLabel = Label(ventana, text='Nombre:')
         #self.nombreLabel.place(x=20, y=10)

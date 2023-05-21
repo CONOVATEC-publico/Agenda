@@ -1,8 +1,9 @@
 import tkinter as tk
 from metodos import *
+from vistas import *
 
 class EliminarVista:
-    def __init__(self, parent, enlace):
+    def __init__(self, parent, contacto):
         # --------------Ventana Eliminar-----------------
         self.root = tk.Toplevel(parent)
         self.root.wait_visibility()
@@ -10,11 +11,24 @@ class EliminarVista:
         self.root.transient(parent)
         #self.root.configure(background='mint cream')
 
-        self.root.title("                                           Eliminar                         ")
+        self.root.title("                                      Eliminar                         ")
         self.root.geometry("335x120+350+90")
         self.root.resizable(width=False, height=False)
+        # -----------------------------------------------
+        self.contacto = contacto
 
-        self.enlace = enlace
+        self.nombreEntry_EV = tk.Entry(self.root)
+        self.nombreEntry_EV["text"] = " "
+
+        self.apellidoEntry_EV = tk.Entry(self.root)
+        self.apellidoEntry_EV["text"] = " "
+
+        self.telefonoEntry_EV = tk.Entry(self.root)
+        self.telefonoEntry_EV["text"] = " "
+
+        self.nombreEntry_EV.insert(0, self.contacto[0])
+        self.apellidoEntry_EV.insert(0, self.contacto[1])
+        self.telefonoEntry_EV.insert(0, self.contacto[2])
 
         # -------Etiquetas de la ventana eliminar--------
         self.mensajeLabel1 = tk.Label(self.root)
@@ -28,12 +42,12 @@ class EliminarVista:
         # --------------------Botones--------------------
         self.Button_SI = tk.Button(self.root)
         self.Button_SI["text"] = "Si"
-        self.Button_SI.place(x=60, y=80, width=30, height=25)
+        self.Button_SI.place(x=80, y=70, width=30, height=25)
         self.Button_SI["command"] = self.Button_SI_command
 
         self.Button_NO = tk.Button(self.root)
         self.Button_NO["text"] = "No"
-        self.Button_NO.place(x=245, y=80, width=30, height=25)
+        self.Button_NO.place(x=225, y=70, width=30, height=25)
         self.Button_NO["command"] = self.Button_NO_command
 
         self.root.protocol("WM_DELETE_WINDOW", self.Button_NO_command)
@@ -46,9 +60,11 @@ class EliminarVista:
         self._salirVentana()
     
     def Button_SI_command(self):
-        eliminarContacto()
+        print("¡La clase EliminarVista ha funcionado satisfactoriamente!")
+        self.contacto = [self.nombreEntry_EV.get().strip(),
+                         self.apellidoEntry_EV.get().strip(),
+                         self.telefonoEntry_EV.get().strip()]
         self._salirVentana()
-
 
 if __name__ == "__main__":
     root = tk.Tk()
