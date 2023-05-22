@@ -295,7 +295,7 @@ class App:
             ventana_agregar = tkinter.Tk()
             ventana_agregar.title("Agregar button")
             ventana_agregar.geometry("335x200+350+250")
-            ventana_agregar.resizable(width=False, height=False)
+            ventana_agregar.resizable(0, 0)
             ventana_agregar.configure(background='mint cream')
 
             # ---------Etiquetas de la ventana agregar-----------
@@ -326,14 +326,14 @@ class App:
 
             # ----------------------Botones----------------------
             cancelarButton = tkinter.Button(ventana_agregar, text="Cancelar",
-                                             command=CancelarButton_command())
+                                             command=CancelarButton_command)
             cancelarButton.pack()
-            cancelarButton.place(x=40, y=120, width=70, height=25)
+            cancelarButton.place(x=40, y=120, height=25, width=70)
 
             guardarButton = tkinter.Button(ventana_agregar, text="Guardar",
-                                             command=GuardarButton_command())
-            cancelarButton.pack()
-            cancelarButton.place(x=230, y=120, width=70, height=25)
+                                             command=GuardarButton_command).pack()
+            #guardarButton.pack()
+            guardarButton.place(x=230, y=120, width=70, height=25)
 
             nombre_Entry.insert(0, enlace[0])
             apellido_Entry.insert(0, enlace[1])
@@ -342,9 +342,9 @@ class App:
             ventana_agregar.protocol("WM_DELETE_WINDOW", CancelarButton_command())
 
             def CancelarButton_command():
-                nuevo__Nombre = nombre_Entry.get().strip()
-                nuevo__Apellido = apellido_Entry.get().strip()
-                nuevo__Telefono = telefono_Entry.get().strip()
+                nuevo__Nombre = nombre_Entry.get()
+                nuevo__Apellido = apellido_Entry.get()
+                nuevo__Telefono = telefono_Entry.get()
 
                 if (nuevo__Nombre != enlace[0]
                     or nuevo__Apellido != enlace[1]
@@ -360,9 +360,9 @@ class App:
                     _salir_VA()
             
             def GuardarButton_command():
-                enlace = [nombre_Entry.get().strip(),
-                         apellido_Entry.get().strip(),
-                         telefono_Entry.get().strip()]
+                enlace = [nombre_Entry.get(),
+                         apellido_Entry.get(),
+                         telefono_Entry.get()]
                 
                 _salir_VA()
             
@@ -370,5 +370,5 @@ class App:
                 ventana_agregar.grab_release()
                 ventana_agregar.destroy()
             
-            #ventana_agregar.protocol("WM_DELETE_WINDOW", CancelarButton_command)
+            ventana_agregar.protocol("WM_DELETE_WINDOW", CancelarButton_command())
             ventana_agregar.mainloop()
