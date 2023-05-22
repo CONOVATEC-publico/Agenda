@@ -291,19 +291,84 @@ class App:
                 self.rellenaTreeview()
             
         else:
-            # --------------Ventana Agregar-----------------
+            # ----------------Ventana Agregar-------------------
             ventana_agregar = tkinter.Tk()
             ventana_agregar.title("Agregar button")
             ventana_agregar.geometry("335x200+350+250")
             ventana_agregar.resizable(width=False, height=False)
+            ventana_agregar.configure(background='mint cream')
 
-            # -------Etiquetas de la ventana agregar--------
-            nombre_Label = tkinter.Label(ventana_agregar, text="Nombre:").pack()
+            # ---------Etiquetas de la ventana agregar-----------
+            nombre_Label = tkinter.Label(ventana_agregar, text="Nombre:", fg='black')
+            nombre_Label.pack()
             nombre_Label.place(x=30, y=10, width=70, height=25)
 
-            ventana_agregar.mainloop()
+            apellido_Label = tkinter.Label(ventana_agregar, text="Apellido:", fg='black')
+            apellido_Label.pack()
+            apellido_Label.place(x=30, y=40, width=70, height=25)
 
-            # -------Etiquetas de la ventana agregar--------
-                #self.nombreLabel_VA = tk.Label(self)
-                #self.nombreLabel_VA["text"] = "Nombre"
-                #self.nombreLabel_VA.place(x=30, y=10, width=70, height=25)
+            telefono_Label = tkinter.Label(ventana_agregar, text="Teléfono:", fg='black')
+            telefono_Label.pack()
+            telefono_Label.place(x=30, y=70, width=70, height=25)
+
+            # ----------Entradas de la ventana agregar-----------
+            nombre_Entry = tkinter.Entry(ventana_agregar, text="")
+            nombre_Entry.pack()
+            nombre_Entry.place(x=100, y=10, width=200, height=25)
+
+            apellido_Entry = tkinter.Entry(ventana_agregar, text="")
+            apellido_Entry.pack()
+            apellido_Entry.place(x=100, y=40, width=200, height=25)
+
+            telefono_Entry = tkinter.Entry(ventana_agregar, text="")
+            telefono_Entry.pack()
+            telefono_Entry.place(x=100, y=70, width=200, height=25)
+
+            # ----------------------Botones----------------------
+            cancelarButton = tkinter.Button(ventana_agregar, text="Cancelar",
+                                             command=CancelarButton_command())
+            cancelarButton.pack()
+            cancelarButton.place(x=40, y=120, width=70, height=25)
+
+            guardarButton = tkinter.Button(ventana_agregar, text="Guardar",
+                                             command=GuardarButton_command())
+            cancelarButton.pack()
+            cancelarButton.place(x=230, y=120, width=70, height=25)
+
+            nombre_Entry.insert(0, enlace[0])
+            apellido_Entry.insert(0, enlace[1])
+            telefono_Entry.insert(0, enlace[2])
+
+            ventana_agregar.protocol("WM_DELETE_WINDOW", CancelarButton_command())
+
+            def CancelarButton_command():
+                nuevo__Nombre = nombre_Entry.get().strip()
+                nuevo__Apellido = apellido_Entry.get().strip()
+                nuevo__Telefono = telefono_Entry.get().strip()
+
+                if (nuevo__Nombre != enlace[0]
+                    or nuevo__Apellido != enlace[1]
+                    or nuevo__Telefono != enlace[2]):
+                    msg_box = messagebox.askquestion('No se guardaron los cambios',
+                                             '¿Estás seguro que quieres cancelar?',
+                                             icon='warning')
+                
+                else:
+                    msg_box = 'yes'
+
+                if msg_box == 'yes':
+                    _salir_VA()
+            
+            def GuardarButton_command():
+                enlace = [nombre_Entry.get().strip(),
+                         apellido_Entry.get().strip(),
+                         telefono_Entry.get().strip()]
+                
+                _salir_VA()
+            
+            def _salir_VA():
+                ventana_agregar.grab_release()
+                ventana_agregar.destroy()
+            
+            #ventana_agregar.protocol("WM_DELETE_WINDOW", CancelarButton_command)
+            ventana_agregar.mainloop()
