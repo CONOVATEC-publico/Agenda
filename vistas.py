@@ -293,8 +293,10 @@ class App:
         else:
             # ----------------Ventana Agregar-------------------
             ventana_agregar = tkinter.Tk()
+            ventana_agregar.attributes('-topmost', True)
+            ventana_agregar.attributes('-toolwindow', True)
             ventana_agregar.title("Agregar button")
-            ventana_agregar.geometry("335x200+350+250")
+            ventana_agregar.geometry("335x200+190+250")
             ventana_agregar.resizable(0, 0)
             ventana_agregar.configure(background='mint cream')
 
@@ -324,6 +326,30 @@ class App:
             telefono_Entry.pack()
             telefono_Entry.place(x=100, y=70, width=200, height=25)
 
+            # -------Métodos para los comandos de botones--------
+            def CancelarButton_command():
+                msg_box = messagebox.askquestion('No se guardaron los cambios',
+                                             '¿Estás seguro que quieres cancelar?',
+                                             icon='warning')
+                
+                if msg_box == 'yes':
+                    _salir_VA()
+                        
+            def GuardarButton_command():
+                contacto = [nombre_Entry.get().strip(),
+                         apellido_Entry.get().strip(),
+                         telefono_Entry.get().strip()]
+                
+                agregar(self.agenda, contacto[0],
+                         contacto[1], contacto[2])
+                self.rellenaTreeview()
+                
+                _salir_VA()
+            
+            def _salir_VA():
+                ventana_agregar.grab_release()
+                ventana_agregar.destroy()
+
             # ----------------------Botones----------------------
             cancelarButton = tkinter.Button(ventana_agregar, text="Cancelar",
                                              command=CancelarButton_command)
@@ -331,44 +357,13 @@ class App:
             cancelarButton.place(x=40, y=120, height=25, width=70)
 
             guardarButton = tkinter.Button(ventana_agregar, text="Guardar",
-                                             command=GuardarButton_command).pack()
-            #guardarButton.pack()
+                                             command=GuardarButton_command)
+            guardarButton.pack()
             guardarButton.place(x=230, y=120, width=70, height=25)
 
             nombre_Entry.insert(0, enlace[0])
             apellido_Entry.insert(0, enlace[1])
             telefono_Entry.insert(0, enlace[2])
-
-            ventana_agregar.protocol("WM_DELETE_WINDOW", CancelarButton_command())
-
-            def CancelarButton_command():
-                nuevo__Nombre = nombre_Entry.get()
-                nuevo__Apellido = apellido_Entry.get()
-                nuevo__Telefono = telefono_Entry.get()
-
-                if (nuevo__Nombre != enlace[0]
-                    or nuevo__Apellido != enlace[1]
-                    or nuevo__Telefono != enlace[2]):
-                    msg_box = messagebox.askquestion('No se guardaron los cambios',
-                                             '¿Estás seguro que quieres cancelar?',
-                                             icon='warning')
-                
-                else:
-                    msg_box = 'yes'
-
-                if msg_box == 'yes':
-                    _salir_VA()
-            
-            def GuardarButton_command():
-                enlace = [nombre_Entry.get(),
-                         apellido_Entry.get(),
-                         telefono_Entry.get()]
-                
-                _salir_VA()
-            
-            def _salir_VA():
-                ventana_agregar.grab_release()
-                ventana_agregar.destroy()
-            
+        
             ventana_agregar.protocol("WM_DELETE_WINDOW", CancelarButton_command())
             ventana_agregar.mainloop()
