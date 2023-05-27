@@ -270,6 +270,8 @@ class App:
     
     def AgregarContacto(self):
         selection = self.treeview.selection()
+        global Lista_enlace
+        Lista_enlace = []
 
         if len(selection) > 0:
             id = selection[0]
@@ -325,7 +327,7 @@ class App:
             telefono_Entry = tkinter.Entry(ventana_agregar, text="")
             telefono_Entry.pack()
             telefono_Entry.place(x=100, y=70, width=200, height=25)
-
+     
             # -------Métodos para los comandos de botones--------
             def CancelarButton_command():
                 msg_box = messagebox.askquestion('No se guardaron los cambios',
@@ -361,9 +363,14 @@ class App:
             guardarButton.pack()
             guardarButton.place(x=230, y=120, width=70, height=25)
 
-            nombre_Entry.insert(0, enlace[0])
-            apellido_Entry.insert(0, enlace[1])
-            telefono_Entry.insert(0, enlace[2])
+            Lista_enlace[0] = nombre_Entry
+            Lista_enlace[1] = apellido_Entry
+            Lista_enlace[2] = telefono_Entry
+
+            nombre_Entry.insert(0, Lista_enlace[0])
+            apellido_Entry.insert(0, Lista_enlace[1])
+            telefono_Entry.insert(0, Lista_enlace[2])
         
             ventana_agregar.protocol("WM_DELETE_WINDOW", CancelarButton_command())
+
             ventana_agregar.mainloop()
