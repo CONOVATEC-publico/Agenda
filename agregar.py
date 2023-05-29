@@ -17,15 +17,15 @@ class AgregarVista:
         self.enlace = enlace
 
         self.nombreLabel_AV = tk.Label(self.root)
-        self.nombreLabel_AV["text"] = "Nombre"
+        self.nombreLabel_AV["text"] = "Nombre:"
         self.nombreLabel_AV.place(x=30, y=10, width=70, height=25)
 
         self.apellidoLabel_AV = tk.Label(self.root)
-        self.apellidoLabel_AV["text"] = "Apellido"
+        self.apellidoLabel_AV["text"] = "Apellido:"
         self.apellidoLabel_AV.place(x=30, y=40, width=70, height=25)
 
         self.telefonoLabel_AV = tk.Label(self.root)
-        self.telefonoLabel_AV["text"] = "Teléfono"
+        self.telefonoLabel_AV["text"] = "Teléfono:"
         self.telefonoLabel_AV.place(x=30, y=70, width=70, height=25)
 
         self.nombreEntry_AV = tk.Entry(self.root)
@@ -81,7 +81,7 @@ class AgregarVista:
         
         self._salir()
 
-        nombre_AV = self.nombreEntry_AV.get().strip()
+        '''nombre_AV = self.nombreEntry_AV.get().strip()
         if nombre_AV == '':
             self.nombreEntry_AV.focus()
             return
@@ -97,7 +97,7 @@ class AgregarVista:
             return
         
         #agregar(self.agenda, nombre_AV, apellido_AV, telefono_AV)
-        #self.rellenaTreeview()
+        #self.rellenaTreeview()'''
 
     def _salir(self):
         self.root.grab_release()

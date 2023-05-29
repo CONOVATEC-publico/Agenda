@@ -22,15 +22,15 @@ class DetalleVista:
         self.detalleLabel.place(x=100, y=10, width=50, height=25)
 
         self.nombreLabel = tk.Label(self.root)
-        self.nombreLabel["text"] = "Nombre"
+        self.nombreLabel["text"] = "Nombre:"
         self.nombreLabel.place(x=30, y=40, width=70, height=25)
 
         self.apellidoLabel = tk.Label(self.root)
-        self.apellidoLabel["text"] = "Apellido"
+        self.apellidoLabel["text"] = "Apellido:"
         self.apellidoLabel.place(x=30, y=70, width=70, height=25)
 
         self.telefonoLabel = tk.Label(self.root)
-        self.telefonoLabel["text"] = "Telefono"
+        self.telefonoLabel["text"] = "Teléfono:"
         self.telefonoLabel.place(x=30, y=100, width=70, height=25)
 
         self.nombreEntry = tk.Entry(self.root)
