@@ -2,7 +2,7 @@
 
 ## Acerca del Proyecto
 
-Este proyecto se basa en la creación de una agenda telefónica mediante el lenguaje python empleando como herramienta principal la libería tkinter.
+Este proyecto se basa en la creación de una agenda telefónica mediante el lenguaje python empleando como herramienta principal la librería tkinter.
 
 ## Autores
 
