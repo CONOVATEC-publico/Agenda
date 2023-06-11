@@ -2,8 +2,9 @@ import tkinter as tk
 from tkinter import messagebox
 from metodos import *
 
+
 class AgregarVista:
-    def __init__(self, parent, enlace):
+    def __init__(self, parent):
         self.root = tk.Toplevel(parent)
         self.root.wait_visibility()
         self.root.grab_set()
@@ -14,7 +15,7 @@ class AgregarVista:
         self.root.geometry("335x200+350+250")
         self.root.resizable(width=False, height=False)
 
-        self.enlace = enlace
+        self.contacto = ['', '', '']
 
         self.nombreLabel_AV = tk.Label(self.root)
         self.nombreLabel_AV["text"] = "Nombre:"
@@ -50,20 +51,18 @@ class AgregarVista:
         self.guardarButton_AV.place(x=230, y=120, width=70, height=25)
         self.guardarButton_AV["command"] = self.GuardarButton_command_AV
 
-        self.nombreEntry_AV.insert(0, self.enlace[0])
-        self.apellidoEntry_AV.insert(0, self.enlace[1])
-        self.telefonoEntry_AV.insert(0, self.enlace[2])
-
         self.root.protocol("WM_DELETE_WINDOW", self.CancelarButton_command_AV)
+
+        self.nombreEntry_AV.focus()
 
     def CancelarButton_command_AV(self):
         nuevo_Nombre = self.nombreEntry_AV.get().strip()
         nuevo_Apellido = self.apellidoEntry_AV.get().strip()
         nuevo_Telefono = self.telefonoEntry_AV.get().strip()
 
-        if (nuevo_Nombre != self.enlace[0]
-                or nuevo_Apellido != self.enlace[1]
-                or nuevo_Telefono != self.enlace[2]):
+        if (nuevo_Nombre != ''
+                or nuevo_Apellido != ''
+                or nuevo_Telefono != ''):
 
             msg_box = messagebox.askquestion('No se guardaron los cambios',
                                              '¿Estás seguro que quieres cancelar?',
@@ -75,29 +74,23 @@ class AgregarVista:
             self._salir()
 
     def GuardarButton_command_AV(self):
-        self.enlace = [self.nombreEntry_AV.get().strip(),
-                         self.apellidoEntry_AV.get().strip(),
-                         self.telefonoEntry_AV.get().strip()]
-        
-        self._salir()
-
-        '''nombre_AV = self.nombreEntry_AV.get().strip()
+        nombre_AV = self.nombreEntry_AV.get().strip()
         if nombre_AV == '':
             self.nombreEntry_AV.focus()
             return
-        
+
         apellido_AV = self.apellidoEntry_AV.get().strip()
         if apellido_AV == '':
             self.apellidoEntry_AV.focus()
             return
-        
+
         telefono_AV = self.telefonoEntry_AV.get().strip()
         if telefono_AV == '':
             self.telefonoEntry_AV.focus()
             return
-        
-        #agregar(self.agenda, nombre_AV, apellido_AV, telefono_AV)
-        #self.rellenaTreeview()'''
+
+        self.contacto = [nombre_AV, apellido_AV, telefono_AV]
+        self._salir()
 
     def _salir(self):
         self.root.grab_release()

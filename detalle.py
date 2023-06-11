@@ -11,7 +11,7 @@ class DetalleVista:
         self.root.grab_set()
         self.root.transient(parent)
 
-        self.root.title("Ver detalle button")
+        self.root.title("Ver detalle")
         self.root.geometry("335x200+350+250")
         self.root.resizable(width=False, height=False)
 
@@ -61,6 +61,8 @@ class DetalleVista:
 
         self.root.protocol("WM_DELETE_WINDOW", self.RegresarButton_command)
 
+        self.nombreEntry.focus()
+
     def RegresarButton_command(self):
         nuevoNombre = self.nombreEntry.get().strip()
         nuevoApellido = self.apellidoEntry.get().strip()
@@ -80,9 +82,22 @@ class DetalleVista:
             self._salir()
 
     def guardarButton_command(self):
-        self.contacto = [self.nombreEntry.get().strip(),
-                         self.apellidoEntry.get().strip(),
-                         self.telefonoEntry.get().strip()]
+        nombre = self.nombreEntry.get().strip()
+        if nombre == '':
+            self.nombreEntry.focus()
+            return
+
+        apellido = self.apellidoEntry.get().strip()
+        if apellido == '':
+            self.apellidoEntry.focus()
+            return
+
+        telefono = self.telefonoEntry.get().strip()
+        if telefono == '':
+            self.telefonoEntry.focus()
+            return
+
+        self.contacto = [nombre, apellido, telefono]
         self._salir()
 
     def _salir(self):
