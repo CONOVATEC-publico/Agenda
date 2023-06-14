@@ -31,4 +31,3 @@ for x in range(1, 5+1):
 ventana = Tk()
 ventana.title("Agenda Telefónica")
 detalleVista = App(agenda, ventana)
-# agregarVista = App(agenda, ventana) # No se observan cambios en la presentación de la agenda telefónica.
